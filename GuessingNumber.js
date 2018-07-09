@@ -8,9 +8,10 @@ let Player = function (rank, name, score) {
 
 function guessingGame() {
     let playerName = prompt("What is your name ?");
-    let playerScore = 0;
+    let playerScore;
     let randomNumber = Math.floor(Math.random() * 100);
     const previousGuess = [];
+    let score = 1000
 
     for (let i = 0; i < 10; i++) {
         let turnLeft = 9
@@ -41,10 +42,10 @@ function guessingGame() {
         alert(`Sorry! Your guess of ${myNumber} was ${helpString}`)
         //alert("Sorry! Your guess of " + myNumber + " was " + helpString + "You have " + (turnLeft - i) + " guesses remaining. Your previous guesses were: " + previousGuess);
         previousGuess.push(myNumber);
-        playerScore = i + 100;    
+        playerScore = score - 100*i;    
         }
     
-    let newPlayer = new Player(playerName, playerScore);
+    let newPlayer = new Player(null, playerName, playerScore);
     scoreTable.push(newPlayer);
     ranking();
     printScore();
@@ -63,7 +64,7 @@ function ranking() {
 }
 
 function printScore() {
-    console.log(scoreTable.map(function (p) { return "Rank: " +p.rank + "//" + " Name: " + p.name + "//" + " Score: " + p.score; }));
+    console.log(scoreTable.map(function (p) { return "Rank: " + p.rank + "//" + " Name: " + p.name + "//" + " Score: " + p.score; }));
 }
 
 function reset() {
@@ -81,3 +82,5 @@ function reset() {
         }
     }
 }
+
+guessingGame();
