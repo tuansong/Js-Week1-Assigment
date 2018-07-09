@@ -1,9 +1,9 @@
 
 let scoreTable = []
 let Player = function (rank, name, score) {
-    this.rank = rank;
     this.name = name;
     this.score = score;
+    this.rank = rank;
 }
 
 function guessingGame() {
@@ -25,41 +25,45 @@ function guessingGame() {
             alert("Congratulation to you, youre winner!!!!!!!");
             break;
         }
-        else if (myNumber < randomNumber) {
-            //if ( previousGuess.map(function(e){ e === myNumber})) {
-            //	alert(myNumber + " is already guessed");
-            //}
-            for (let n = 0; n < previousGuess.length; n++) {
-                if (previousGuess[n] === myNumber) {
-                    alert("Already guessed");
-                    myNumber = parseInt(prompt("What is your number"));
-                }
-            }
-            alert("Sorry! Your guess of " + myNumber + " was too low! You have " + (turnLeft - i) + " guesses remaining. Your previous guesses were: " + previousGuess);
+        let helpString;
 
+        if (myNumber < randomNumber) {
+            helpString = " too low! ";
+        } else {
+            helpString = " too high! ";
         }
-        else if (myNumber > randomNumber) {
-            // if ( previousGuess.map(function(e){ e === myNumber})) {
-            //  	alert(myNumber + " is already guessed");
-            // }
-            for (let n = 0; n < previousGuess.length; n++) {
-                if (previousGuess[n] === myNumber) {
-                    alert("Already guessed");
-                    myNumber = parseInt(prompt("What is your number"));
-                }
+        for (let n = 0; n < previousGuess.length; n++) {
+            if (previousGuess[n] === myNumber) {
+                alert("Already guessed");
+                myNumber = parseInt(prompt("What is your number"));
             }
-            alert("Sorry! Your guess of " + myNumber + " was too high! You have " + (turnLeft - i) + " guesses remaining. Your previous guesses were: " + previousGuess);
         }
+        alert(`Sorry! Your guess of ${myNumber} was ${helpString}`)
+        //alert("Sorry! Your guess of " + myNumber + " was " + helpString + "You have " + (turnLeft - i) + " guesses remaining. Your previous guesses were: " + previousGuess);
         previousGuess.push(myNumber);
-        playerScore = i + 100;
-    }
-    let newPlayer = new Player(1, playerName, playerScore);
+        playerScore = i + 100;    
+        }
+    
+    let newPlayer = new Player(playerName, playerScore);
     scoreTable.push(newPlayer);
+    ranking();
+    printScore();
     reset();
 }
 
+    // Now sort the table, so the highest score is at the top.
+
+
+
+function ranking() {
+    scoreTable = scoreTable.sort(function(a, b){return a.score - b.score});
+    for (let i = 0; i < scoreTable.length; i++) {
+        scoreTable[0].rank = i+1;
+    }
+}
+
 function printScore() {
-    return scoreTable.map(function (p) { return "Rank: " + p.rank + "//" + " Name: " + p.name + "//" + " Score: " + p.score; })
+    console.log(scoreTable.map(function (p) { return "Rank: " +p.rank + "//" + " Name: " + p.name + "//" + " Score: " + p.score; }));
 }
 
 function reset() {
