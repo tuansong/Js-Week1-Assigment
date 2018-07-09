@@ -59,7 +59,7 @@ function guessingGame() {
 function ranking() {
     scoreTable = scoreTable.sort(function(a, b){return a.score - b.score});
     for (let i = 0; i < scoreTable.length; i++) {
-        scoreTable[0].rank = i+1;
+        scoreTable[i].rank = i+1;
     }
 }
 
